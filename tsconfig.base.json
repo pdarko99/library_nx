@@ -1,0 +1,30 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "books/data-access": ["libs/books/data-access/src/index.ts"],
+      "books/feature": ["libs/books/feature/src/index.ts"],
+      "books/model": ["libs/books/model/src/index.ts"],
+      "books/ui": ["libs/books/ui/src/index.ts"],
+      "books/utils": ["libs/books/utils/src/index.ts"],
+      "favourites": ["libs/favourites/feature/src/index.ts"],
+      "favourites/data-access": ["libs/favourites/data-access/src/index.ts"],
+      "shared-ui": ["libs/shared/ui/src/index.ts"],
+      "shared/card": ["libs/shared/card/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

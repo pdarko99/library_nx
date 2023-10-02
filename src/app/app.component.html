@@ -1,1 +1,41 @@
-<app-nx-welcome></app-nx-welcome> <router-outlet></router-outlet>
+<lib-shared-ui>
+  <header>
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+    >
+      <mat-icon (click)="drawer.toggle()">{{
+        drawer.opened ? 'close' : 'menu'
+      }}</mat-icon>
+    </button>
+    <div class="content">
+      <span>My App</span>
+    </div>
+    <div class="list-container">
+      <ul *ngIf="breakpoint">
+        <li routerLink="/favs">favs</li>
+      </ul>
+    </div>
+  </header>
+</lib-shared-ui>
+
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="over">
+    <ul class="sidebar-items">
+      <li>
+        <mat-icon color="primary">home</mat-icon>
+        <a routerLink="/books"> Home</a>
+      </li>
+      <li>
+        <mat-icon color="primary">favorite</mat-icon>
+        <a routerLink="/favs"> Favourites</a>
+      </li>
+      
+    </ul>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <router-outlet />
+  </div>
+</mat-drawer-container>

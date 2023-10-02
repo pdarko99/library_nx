@@ -1,0 +1,27 @@
+main {
+  width: 80%;
+  margin: auto;
+  height: 100%;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .addBook {
+      background-color: #3f51b5;
+      color: #fff !important;
+      padding: 10px;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  main {
+    width: 100%;
+
+    .header {
+      width: 80%;
+      margin: auto;
+    }
+  }
+}

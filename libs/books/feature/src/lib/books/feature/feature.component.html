@@ -1,0 +1,15 @@
+<main>
+    <div class="header">
+        <h2>All Books</h2>
+        <div>
+            <button mat-raised-button class="addBook" (click)="openDialog()">Add Book</button>
+
+        </div>
+        
+    </div>
+    <lib-books
+    [books]="books"
+    (favourites)="favourites($event)"
+    (updatebook)="updatebook($event)"
+    />
+</main>

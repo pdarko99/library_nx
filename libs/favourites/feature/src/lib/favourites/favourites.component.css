@@ -1,0 +1,16 @@
+main {
+  width: 80%;
+  margin: auto;
+  height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    main {
+      width: 100%;
+  
+      .header {
+        width: 80%;
+        margin: auto;
+      }
+    }
+  }

@@ -1,0 +1,6 @@
+div{
+    width: 60vh;
+    .example-full-width{
+        width: 100%;
+    }
+}
