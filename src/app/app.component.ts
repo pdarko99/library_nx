@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
@@ -6,20 +6,21 @@ import {SharedUiComponent} from "shared-ui"
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { distinctUntilChanged, map } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 
 @Component({
   standalone: true,
-  imports: [ RouterModule,CommonModule, SharedUiComponent, MatToolbarModule,MatIconModule,MatSidenavModule],
+  imports: [ RouterModule, NgIf, SharedUiComponent, MatToolbarModule,MatIconModule,MatSidenavModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
   breakpoint!:boolean;
   title = 'library';
 
-  constructor(private breakpointObserver: BreakpointObserver){}
+  breakpointObserver = inject(BreakpointObserver)
 
 
   ngOnInit() {

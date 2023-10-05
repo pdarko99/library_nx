@@ -4,3 +4,8 @@ npx nx g @nx/angular:library auth/model --directory=libs/auth/model --standalone
 //how do i flatten the directories im using the --flatt
 
 //how do i generate specific files such as pipe.ts and service or models
+
+
+why do they use the list(immutable one) and whenever they 
+always want to create a new list instead of mutating 
+to be able to use onpush

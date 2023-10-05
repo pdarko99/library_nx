@@ -1,4 +1,9 @@
-import { Component, Inject, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,16 +26,16 @@ import { Book } from 'books/model';
   ],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent {
+  protected data = inject(MAT_DIALOG_DATA);
+  protected bookservice = inject(BooksDataService);
+
   TitleFormControl = new FormControl(this.data?.title, [Validators.required]);
   DescriptionFormControl = new FormControl(this.data?.description, [
     Validators.required,
   ]);
-
-  bookservice = inject(BooksDataService);
-
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   Add_or_update_Book() {
     const data: Book = {

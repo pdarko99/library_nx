@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DescriptionPipe implements PipeTransform {
   transform(value: string) {
-    value.length < 80 ? value  : value = value.substring(0, 84) + "...";
+    value.length < 80 ? value : (value = value.substring(0, 84) + '...');
     return value;
   }
 }
