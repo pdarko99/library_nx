@@ -20,14 +20,15 @@ import { Book } from 'books/model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class FeatureComponent {
-  protected booksService = inject(BooksDataService);
 
   protected readonly injector = inject(Injector);
 
-  books = this.booksService.books();
+
+  protected bookservice = inject(BooksDataService);
+  storyBooks = this.bookservice.storyBooks;
 
   favourites(book: Book) {
-    const res = this.booksService.addfav(book);
+    const res = this.bookservice.addfav(book);
     if (res) {
       return alert('added to favourites');
     }
@@ -42,8 +43,6 @@ export default class FeatureComponent {
     const dialogRef = this.injector
       .get(MatDialog)
       .open(CardComponent, { data: book });
-
-  
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);

@@ -9,3 +9,9 @@ npx nx g @nx/angular:library auth/model --directory=libs/auth/model --standalone
 why do they use the list(immutable one) and whenever they 
 always want to create a new list instead of mutating 
 to be able to use onpush
+
+
+// how do i add elf instead of manually intalling them
+
+//differnce between saving them in signals and persist state cuz they both tend to lose data 
+//after refresh

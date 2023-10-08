@@ -8,7 +8,7 @@
         
     </div>
     <lib-books
-    [books]="books"
+    [books]="storyBooks()"
     (favourites)="favourites($event)"
     (updatebook)="updatebook($event)"
     />

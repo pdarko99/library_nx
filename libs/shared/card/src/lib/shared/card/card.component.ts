@@ -1,17 +1,12 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { BooksDataService } from 'books/data-access';
 import { Book } from 'books/model';
+import { BooksDataService } from 'books/data-access';
 
 @Component({
   selector: 'lib-card',
