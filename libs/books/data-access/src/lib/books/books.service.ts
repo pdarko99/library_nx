@@ -70,22 +70,17 @@ export class BooksDataService {
   }
 
   updateBook(data: Book) {
-    const index = this.storyBooks().findIndex(
-      (book: Book) => book.id === data.id
-    );
-    const updatedBooks = this.storyBooks().filter(
-      (book) => book.id !== data.id
-    );
-
     const bks = {
       ...data,
       title: data.title,
       description: data.description,
     };
 
-    updatedBooks.splice(index, 0, bks);
+    const val = this.storyBooks().map((todo) =>
+      todo.id === data.id ? bks : todo
+    );
 
-    this.storyBooks.set(updatedBooks);
+    this.storyBooks.set(val);
 
     setBooks(this.storyBooks());
   }
