@@ -12,7 +12,7 @@ import { BooksDataService } from 'books/data-access';
 })
 export default class FavouritesComponent {
   bookService = inject(BooksDataService);
-  favs = this.bookService.favs()
+  favs = this.bookService.favourites()
 
   rm_fav(book:any){
     this.bookService.deletefav(book.id)

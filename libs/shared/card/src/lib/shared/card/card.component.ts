@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -12,7 +12,7 @@ import { BooksDataService } from 'books/data-access';
   selector: 'lib-card',
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
     MatDialogModule,
     ReactiveFormsModule,
     MatButtonModule,
