@@ -6,11 +6,7 @@ import {
   createRequestDataSource,
 } from '@ngneat/elf-requests';
 
-import {
-  excludeKeys,
-  localStorageStrategy,
-  persistState,
-} from '@ngneat/elf-persist-state';
+import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
 
 interface BooksProps {
   books: Book[];

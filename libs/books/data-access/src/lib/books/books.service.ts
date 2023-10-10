@@ -20,7 +20,7 @@ export class BooksDataService {
     { initialValue: [] as Book[] }
   );
 
-  favs = signal<Book[]>([]);
+  favourites = signal<Book[]>([]);
   books = [
     {
       id: 1,
@@ -58,29 +58,28 @@ export class BooksDataService {
     setBooks(this.books);
 
     effect(() => {
-      console.log(this.favs(), 'from this. fvas');
+      console.log(this.favourites(), 'from this. fvas');
     });
   }
 
   addBook(data: Book) {
     data.id = this.storyBooks().length + 1;
     this.storyBooks.set([...this.storyBooks(), data]);
-    console.log('am being fired fired');
     setBooks(this.storyBooks());
   }
 
   updateBook(data: Book) {
-    const bks = {
+    const newBook = {
       ...data,
       title: data.title,
       description: data.description,
     };
 
-    const val = this.storyBooks().map((todo) =>
-      todo.id === data.id ? bks : todo
+    const updatedBooks = this.storyBooks().map((todo) =>
+      todo.id === data.id ? newBook : todo
     );
 
-    this.storyBooks.set(val);
+    this.storyBooks.set(updatedBooks);
 
     setBooks(this.storyBooks());
   }
@@ -94,21 +93,21 @@ export class BooksDataService {
   }
 
   addfav(data: Book): number {
-    let res = 0;
+    let results = 0;
 
-    const index = this.favs().findIndex((i) => i.id === data.id);
+    const index = this.favourites().findIndex((i) => i.id === data.id);
 
     if (index === -1) {
-      this.favs.set([...this.favs(), data]);
-      res = 1;
+      this.favourites.set([...this.favourites(), data]);
+      results = 1;
     }
 
-    return res;
+    return results;
   }
 
   deletefav(id: number) {
-    const updatedBooks = this.favs().filter((book) => book.id !== id);
+    const updatedBooks = this.favourites().filter((book) => book.id !== id);
 
-    this.favs.set(updatedBooks);
+    this.favourites.set(updatedBooks);
   }
 }

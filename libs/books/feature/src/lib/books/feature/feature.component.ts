@@ -28,8 +28,8 @@ export default class FeatureComponent {
   storyBooks = this.bookservice.storyBooks;
 
   favourites(book: Book) {
-    const res = this.bookservice.addfav(book);
-    if (res) {
+    const results = this.bookservice.addfav(book);
+    if (results) {
       return alert('added to favourites');
     }
     alert('already added to favourites');
