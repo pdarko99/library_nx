@@ -3,5 +3,5 @@
     <h2>My favs</h2>
   </div>
 
-  <lib-books [books]="favs" [favs]="true" (favourites)="rm_fav($event)" />
+  <lib-books [books]="favs()" [favs]="true" (favourites)="rm_fav($event)" />
 </main>
