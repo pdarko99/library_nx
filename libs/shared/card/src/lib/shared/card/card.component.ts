@@ -33,19 +33,19 @@ export class CardComponent {
   ]);
 
   Add_or_update_Book() {
-    const data: Book = {
-      title: this.TitleFormControl.value,
-      description: this.DescriptionFormControl.value,
-    };
-    if (this.data) {
-      data.id = this.data.id;
-      return this.bookservice.updateBook(data);
-    }
+    // const data: Book = {
+    //   title: this.TitleFormControl.value,
+    //   description: this.DescriptionFormControl.value,
+    // };
+    // if (this.data) {
+    //   data.id = this.data.id;
+    //   return this.bookservice.updateBook(data);
+    // }
 
-    this.bookservice.addBook(data);
+    // this.bookservice.addBook(data);
   }
 
   deleteBook() {
-    this.bookservice.deleteBook(this.data.id);
+    // this.bookservice.deleteBook(this.data.id);
   }
 }

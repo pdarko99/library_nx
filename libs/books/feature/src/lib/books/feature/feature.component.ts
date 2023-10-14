@@ -2,14 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   Injector,
+  OnInit,
   inject,
 } from '@angular/core';
 
 import { UiComponent } from 'books/ui';
-import { BooksDataService } from 'books/data-access';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CardComponent } from 'shared/card';
 import { Book } from 'books/model';
+import { FeatureService } from '../../feature.service';
 
 @Component({
   selector: 'lib-feature',
@@ -19,16 +20,20 @@ import { Book } from 'books/model';
   styleUrls: ['./feature.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class FeatureComponent {
+export default class FeatureComponent implements OnInit{
 
   protected readonly injector = inject(Injector);
 
 
-  protected bookservice = inject(BooksDataService);
-  storyBooks = this.bookservice.storyBooks;
+  protected featureService = inject(FeatureService);
+  storyBooks = this.featureService.storyBooks;
+
+  ngOnInit(): void {
+    this.featureService.setBooksService()
+  }
 
   favourites(book: Book) {
-    const results = this.bookservice.addfav(book);
+    const results = this.featureService.addfav(book);
     if (results) {
       return alert('added to favourites');
     }

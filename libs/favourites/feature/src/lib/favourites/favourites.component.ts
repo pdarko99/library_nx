@@ -1,7 +1,8 @@
-import { Component, inject,ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UiComponent } from 'books/ui';
-import { BooksDataService } from 'books/data-access';
+import { Book } from 'books/model';
+import { FavouritesService } from '../favourites.service';
 
 @Component({
   selector: 'lib-favourites',
@@ -9,14 +10,14 @@ import { BooksDataService } from 'books/data-access';
   imports: [CommonModule, UiComponent],
   templateUrl: './favourites.component.html',
   styleUrls: ['./favourites.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class FavouritesComponent {
-  bookService = inject(BooksDataService);
-  favs = this.bookService.favourites
+  favouriteService = inject(FavouritesService);
+  favourites = this.favouriteService.favourites;
 
-  rm_fav(book:any){
-    console.log('helloefas')
-    this.bookService.deletefav(book.id)
+  removeFavourite(book: Book) {
+    console.log('helloefas');
+    this.favouriteService.deletefav(book.id);
   }
 }

@@ -1,26 +1,18 @@
-import { Injectable, effect, signal } from '@angular/core';
+import { Injectable, Injector, inject, signal } from '@angular/core';
 import { Book } from 'books/model';
+import { filter, map } from 'rxjs';
 import { selectbookDataSource$, setBooks } from './books.store';
-import { filter, map, tap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { BooksDataService } from 'books/data-access';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BooksDataService {
-  public readonly selectBooks$ = selectbookDataSource$.pipe(
-    filter((data) => !data.loading),
-    map((data) => data.books)
-  );
-
-  storyBooks = signal<Book[]>([]);
-
-  private readonlystoryBooks = toSignal(
-    this.selectBooks$.pipe(tap((x) => this.storyBooks.set(x))),
-    { initialValue: [] as Book[] }
-  );
+export class FeatureService {
+  protected readonly injector = inject(Injector);
 
   favourites = signal<Book[]>([]);
+
   books = [
     {
       id: 1,
@@ -54,18 +46,22 @@ export class BooksDataService {
     },
   ];
 
-  constructor() {
-    setBooks(this.books);
+  public readonly storyBooks = toSignal(
+    selectbookDataSource$.pipe(
+      filter((data) => !data.loading),
+      map((data) => data.books)
+    ),
+    { initialValue: [] as Book[] }
+  );
 
-    effect(() => {
-      console.log(this.favourites(), 'from this. fvas');
-    });
+  setBooksService() {
+    setBooks(this.books);
   }
 
   addBook(data: Book) {
     data.id = this.storyBooks().length + 1;
-    this.storyBooks.set([...this.storyBooks(), data]);
-    setBooks(this.storyBooks());
+    const books = [...this.storyBooks(), data];
+    setBooks(books);
   }
 
   updateBook(data: Book) {
@@ -79,20 +75,21 @@ export class BooksDataService {
       todo.id === data.id ? newBook : todo
     );
 
-    this.storyBooks.set(updatedBooks);
-
-    setBooks(this.storyBooks());
+    setBooks(updatedBooks);
   }
 
   deleteBook(id: number) {
     const updatedBooks = this.storyBooks().filter((book) => book.id !== id);
 
-    this.storyBooks.set(updatedBooks);
-
-    setBooks(this.storyBooks());
+    setBooks(updatedBooks);
   }
 
   addfav(data: Book): number {
+    if (!this.favourites().length) {
+      const bookDataService = this.injector.get(BooksDataService);
+
+      this.favourites = bookDataService.favourites;
+    }
     let results = 0;
 
     const index = this.favourites().findIndex((i) => i.id === data.id);
@@ -103,15 +100,5 @@ export class BooksDataService {
     }
 
     return results;
-  }
-
-  deletefav(id: number) {
-    console.log(this.favourites(), "before are you being called")
-    const updatedBooks = this.favourites().filter((book) => book.id !== id);
-
-    this.favourites.set(updatedBooks);
-
-    console.log(this.favourites(), "after are you being called")
-
   }
 }

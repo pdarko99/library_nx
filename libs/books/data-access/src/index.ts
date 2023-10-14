@@ -1,1 +1,1 @@
-export * from './lib/books/books.service';
+export * from './lib/books/books.data.service';
