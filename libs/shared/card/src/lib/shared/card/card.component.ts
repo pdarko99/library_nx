@@ -27,25 +27,27 @@ export class CardComponent {
   protected data = inject(MAT_DIALOG_DATA);
   protected bookservice = inject(BooksDataService);
 
-  TitleFormControl = new FormControl(this.data?.title, [Validators.required]);
-  DescriptionFormControl = new FormControl(this.data?.description, [
+  TitleFormControl = new FormControl(this.data.book?.title, [Validators.required]);
+  DescriptionFormControl = new FormControl(this.data.book?.description, [
     Validators.required,
   ]);
 
   Add_or_update_Book() {
-    // const data: Book = {
-    //   title: this.TitleFormControl.value,
-    //   description: this.DescriptionFormControl.value,
-    // };
-    // if (this.data) {
-    //   data.id = this.data.id;
-    //   return this.bookservice.updateBook(data);
-    // }
-
-    // this.bookservice.addBook(data);
+    const data: Book = {
+      id: 0,
+      title: this.TitleFormControl.value,
+      description: this.DescriptionFormControl.value,
+    };
+    
+    if (this.data.book) {
+      console.log(data)
+      data.id = this.data.book.id;
+      return this.data.funcs.updateBook(data);
+    }
+    this.data.funcs.addBook(data);
   }
 
   deleteBook() {
-    // this.bookservice.deleteBook(this.data.id);
+    this.data.funcs.deletebook(this.data.book.id);
   }
 }

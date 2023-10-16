@@ -1,4 +1,5 @@
-import { createStore, withProps, select, setProps } from '@ngneat/elf';
+import { createStore, select, setProps } from '@ngneat/elf';
+import { selectAllEntities, setEntities, withEntities } from '@ngneat/elf-entities';
 import { Book } from 'books/model';
 import {
   withRequestsCache,
@@ -8,16 +9,12 @@ import {
 
 import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
 
-interface BooksProps {
-  books: Book[];
-}
+
 const bookStore = createStore(
   {
     name: 'BookStoreName',
   },
-  withProps<BooksProps>({
-    books: [],
-  }),
+  withEntities<Book>(),
   withRequestsCache(),
   withRequestsStatus()
 );
@@ -28,18 +25,18 @@ persistState(bookStore, {
 });
 
 const bookDataSource = createRequestDataSource({
-  data$: () => bookStore.pipe(select((state) => state.books)),
+  data$: () => bookStore.pipe(selectAllEntities()),
   dataKey: 'books',
   idleAsPending: true,
   requestKey: 'books',
   store: bookStore,
 });
 
+
+
 export function setBooks(book: Book[]) {
   bookStore.update(
-    setProps({
-      books: book,
-    }),
+    setEntities(book),
     bookDataSource.setSuccess(),
     bookDataSource.setCached()
   );

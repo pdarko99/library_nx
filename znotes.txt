@@ -15,3 +15,7 @@ to be able to use onpush
 
 //differnce between saving them in signals and persist state cuz they both tend to lose data 
 //after refresh
+
+
+//since we are not mutating the data, when we change a data which has already been added as a fav
+//it doesn't get updated or changed 

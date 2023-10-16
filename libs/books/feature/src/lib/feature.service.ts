@@ -60,11 +60,12 @@ export class FeatureService {
 
   addBook(data: Book) {
     data.id = this.storyBooks().length + 1;
-    const books = [...this.storyBooks(), data];
+    const books = [data, ...this.storyBooks()];
     setBooks(books);
   }
 
   updateBook(data: Book) {
+    console.log('firn in service okay')
     const newBook = {
       ...data,
       title: data.title,
@@ -74,6 +75,8 @@ export class FeatureService {
     const updatedBooks = this.storyBooks().map((todo) =>
       todo.id === data.id ? newBook : todo
     );
+
+    console.log(updatedBooks)
 
     setBooks(updatedBooks);
   }

@@ -12,6 +12,9 @@ import { CardComponent } from 'shared/card';
 import { Book } from 'books/model';
 import { FeatureService } from '../../feature.service';
 
+
+// interface BookService {
+
 @Component({
   selector: 'lib-feature',
   standalone: true,
@@ -20,16 +23,14 @@ import { FeatureService } from '../../feature.service';
   styleUrls: ['./feature.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class FeatureComponent implements OnInit{
-
+export default class FeatureComponent implements OnInit {
   protected readonly injector = inject(Injector);
-
 
   protected featureService = inject(FeatureService);
   storyBooks = this.featureService.storyBooks;
 
   ngOnInit(): void {
-    this.featureService.setBooksService()
+    this.featureService.setBooksService();
   }
 
   favourites(book: Book) {
@@ -45,12 +46,31 @@ export default class FeatureComponent implements OnInit{
   }
 
   openDialog(book?: Book) {
-    const dialogRef = this.injector
-      .get(MatDialog)
-      .open(CardComponent, { data: book });
+    const dialogRef = this.injector.get(MatDialog).open(CardComponent, {
+      data: {
+        book,
+        funcs: {
+          deletebook: this.deleteBook.bind(this),
+          addBook: this.addBook.bind(this),
+          updateBook: this.updateBook.bind(this),
+        },
+      },
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  deleteBook(id: number) {
+    this.featureService.deleteBook(id);
+  }
+
+  addBook(book: Book) {
+    this.featureService.addBook(book);
+  }
+
+  updateBook(book: Book) {
+    this.featureService.updateBook(book);
   }
 }

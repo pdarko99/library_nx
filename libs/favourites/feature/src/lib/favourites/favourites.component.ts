@@ -17,7 +17,6 @@ export default class FavouritesComponent {
   favourites = this.favouriteService.favourites;
 
   removeFavourite(book: Book) {
-    console.log('helloefas');
     this.favouriteService.deletefav(book.id);
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
@@ -7,6 +7,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { distinctUntilChanged, map } from 'rxjs';
 import { NgIf } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   standalone: true,
@@ -16,24 +17,19 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
-  breakpoint!:boolean;
-  title = 'library';
+export class AppComponent {
 
   breakpointObserver = inject(BreakpointObserver)
 
-
-  ngOnInit() {
-    this.breakpointObserver
+  breakpoint = toSignal(this.breakpointObserver
     .observe('(min-width: 600px)')
     .pipe(
       map(value => value.matches),
       distinctUntilChanged()
-    ).subscribe(
-      value => {
-        console.log(value)
-        this.breakpoint = value
-      }
-    )
-  }
+    ))
+  title = 'library';
+
+
+
+ 
 }
