@@ -1,20 +1,29 @@
-import { createStore, select, setProps } from '@ngneat/elf';
-import { selectAllEntities, setEntities, withEntities } from '@ngneat/elf-entities';
-import { Book } from 'books/model';
+import { createStore, select, setProps, withProps } from '@ngneat/elf';
 import {
+  getAllEntities,
+  selectAllEntities,
+  setEntities,
+  withEntities,
+} from '@ngneat/elf-entities';
+import {
+  createRequestDataSource,
   withRequestsCache,
   withRequestsStatus,
-  createRequestDataSource,
 } from '@ngneat/elf-requests';
+import { Book } from 'books/model';
 
 import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
-
 
 const bookStore = createStore(
   {
     name: 'BookStoreName',
   },
   withEntities<Book>(),
+  withProps<{
+    favorites: Array<Book['id']>;
+  }>({
+    favorites: [],
+  }),
   withRequestsCache(),
   withRequestsStatus()
 );
@@ -32,8 +41,6 @@ const bookDataSource = createRequestDataSource({
   store: bookStore,
 });
 
-
-
 export function setBooks(book: Book[]) {
   bookStore.update(
     setEntities(book),
@@ -43,3 +50,23 @@ export function setBooks(book: Book[]) {
 }
 
 export const selectbookDataSource$ = bookDataSource.data$();
+
+export function setFavorites(bookIds: Array<Book['id']>) {
+  bookStore.update(
+    setProps({
+      favorites: bookIds,
+    })
+  );
+}
+
+export function getBooks() {
+  return bookStore.query(getAllEntities());
+}
+
+export function getFavorites() {
+  return bookStore.query((state) => state.favorites);
+}
+
+export const selectFavorites$ = bookStore.pipe(
+  select((state) => state.favorites)
+);

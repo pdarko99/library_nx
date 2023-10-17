@@ -6,12 +6,12 @@ import {
   inject,
 } from '@angular/core';
 
-import { UiComponent } from 'books/ui';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { CardComponent } from 'shared/card';
 import { Book } from 'books/model';
-import { FeatureService } from '../../feature.service';
-
+import { UiComponent } from 'books/ui';
+import { CardComponent } from 'shared/card';
+import { BooksService } from '../../feature.service';
 
 // interface BookService {
 
@@ -26,19 +26,18 @@ import { FeatureService } from '../../feature.service';
 export default class FeatureComponent implements OnInit {
   protected readonly injector = inject(Injector);
 
-  protected featureService = inject(FeatureService);
-  storyBooks = this.featureService.storyBooks;
+  protected featureService = inject(BooksService);
+
+  protected readonly books = toSignal(this.featureService.selectBooks$, {
+    initialValue: [],
+  });
 
   ngOnInit(): void {
-    this.featureService.setBooksService();
+    this.featureService.loadBooks().subscribe();
   }
 
   favourites(book: Book) {
-    const results = this.featureService.addfav(book);
-    if (results) {
-      return alert('added to favourites');
-    }
-    alert('already added to favourites');
+    this.featureService.addFavourite(book.id);
   }
 
   updatebook(book: Book) {

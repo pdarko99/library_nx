@@ -1,8 +1,9 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UiComponent } from 'books/ui';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { BooksService } from 'books/feature';
 import { Book } from 'books/model';
-import { FavouritesService } from '../favourites.service';
+import { UiComponent } from 'books/ui';
 
 @Component({
   selector: 'lib-favourites',
@@ -13,10 +14,12 @@ import { FavouritesService } from '../favourites.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class FavouritesComponent {
-  favouriteService = inject(FavouritesService);
-  favourites = this.favouriteService.favourites;
+  booksService = inject(BooksService);
+  favouriteBooks = toSignal(this.booksService.selectFavouriteBooks$, {
+    initialValue: [],
+  });
 
   removeFavourite(book: Book) {
-    this.favouriteService.deletefav(book.id);
+    this.booksService.deleteFavourite(book.id);
   }
 }
