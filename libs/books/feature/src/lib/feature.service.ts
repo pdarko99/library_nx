@@ -65,7 +65,6 @@ export class FeatureService {
   }
 
   updateBook(data: Book) {
-    console.log('firn in service okay')
     const newBook = {
       ...data,
       title: data.title,
@@ -76,7 +75,7 @@ export class FeatureService {
       todo.id === data.id ? newBook : todo
     );
 
-    console.log(updatedBooks)
+    console.log(updatedBooks);
 
     setBooks(updatedBooks);
   }
