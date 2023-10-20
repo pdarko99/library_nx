@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { BOOK_PAGE } from 'books/feature';
+import { BOOK_PAGE, FAVOURITE_PAGE } from 'books/feature';
 
 export const appRoutes: Route[] = [
   {
@@ -10,5 +10,7 @@ export const appRoutes: Route[] = [
   {
     ...BOOK_PAGE,
   },
-
+  {
+    ...FAVOURITE_PAGE,
+  },
 ];

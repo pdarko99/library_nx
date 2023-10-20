@@ -24,6 +24,8 @@ export class BooksDataService {
         title: 'Book 3',
         description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent v
             
+            itae luctus massa Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent v
+            
             itae luctus massa`,
       },
       {

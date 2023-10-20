@@ -19,3 +19,6 @@ to be able to use onpush
 
 //since we are not mutating the data, when we change a data which has already been added as a fav
 //it doesn't get updated or changed 
+
+
+//difference between getAllEntities and SelectAllEntities

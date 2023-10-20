@@ -1,6 +1,5 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { UiComponent } from 'books/ui';
+import { CardComponent } from 'books/ui';
 import { Book } from 'books/model';
 import { BooksService } from '../books/books.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -8,16 +7,16 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'lib-favourites',
   standalone: true,
-  imports: [CommonModule, UiComponent],
+  imports: [CardComponent],
   templateUrl: './favourites.component.html',
   styleUrls: ['./favourites.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class FavouritesComponent {
   booksService = inject(BooksService);
-  favourites = toSignal(this.booksService.getFavourites);
-
- 
+  favourites = toSignal(this.booksService.getFavouriteBooks$, {
+    initialValue: [] as Book[],
+  });
 
   removeFavourite(book: Book) {
     this.booksService.deletefav(book.id);

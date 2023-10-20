@@ -7,7 +7,7 @@
         src="https://material.angular.io/assets/img/examples/shiba2.jpg"
         alt="Photo of a Shiba Inu"
       />
-      <h3>{{ book.title }}</h3>
+      <h3>{{ book.title | titlecase }}</h3>
 
       <p>
         {{ book.description | flatten_description }}

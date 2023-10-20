@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-export const FAV_PAGE: Route = {
+export const FAVOURITE_PAGE: Route = {
   path: 'favs',
   loadComponent: () => import('./favourites.component')
 };

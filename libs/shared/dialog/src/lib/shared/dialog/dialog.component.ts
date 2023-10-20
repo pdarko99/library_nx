@@ -23,7 +23,7 @@ import { BooksDataService } from 'books/data-access';
   styleUrls: ['./dialog.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardComponent {
+export class DialogComponent {
   protected data = inject(MAT_DIALOG_DATA);
   protected bookservice = inject(BooksDataService);
 

@@ -1,6 +1,6 @@
-import { Injectable, Injector, inject, signal } from '@angular/core';
+import { Injectable, Injector, inject } from '@angular/core';
 import { Book } from 'books/model';
-import { Observable, filter, map, switchMap, tap } from 'rxjs';
+import { filter, map, switchMap, tap } from 'rxjs';
 import {
   selectbookDataSource$,
   setBooks,
@@ -19,9 +19,8 @@ export class BooksService {
 
   bookService = inject(BooksDataService);
 
-  // favourites = selectFavorites$;
 
-  all_books = selectbookDataSource$.pipe(
+  all_books$ = selectbookDataSource$.pipe(
     filter((data) => !data.loading),
     tap((data) => console.log(data, 'from slect all entites')),
     map((data) => data.books)
@@ -59,16 +58,14 @@ export class BooksService {
     setBooks(updatedBooks);
   }
 
-
-  getFavourites(): Observable<Array<Book>> {
-    selectFavorites$.pipe(
-      switchMap(favourites => {
-        return this.all_books.pipe(
-          map(books => books.filter(book => favourites.includes(book.id)))
-        )
-      })
+  public getFavouriteBooks$ = selectFavorites$.pipe(
+    switchMap((favourites) =>
+      this.all_books$.pipe(
+        tap(x => console.log("firng here too")),
+        map((books) => books.filter((book) => favourites.includes(book.id)))
+      )
     )
-  }
+  );
 
   addfav(data: Book): number {
     let results = 0;
