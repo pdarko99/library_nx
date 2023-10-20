@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UiComponent } from 'books/ui';
 import { Book } from 'books/model';
 import { BooksService } from '../books/books.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'lib-favourites',
@@ -14,7 +15,9 @@ import { BooksService } from '../books/books.service';
 })
 export default class FavouritesComponent {
   booksService = inject(BooksService);
-  favourites = this.booksService.favourites;
+  favourites = toSignal(this.booksService.getFavourites);
+
+ 
 
   removeFavourite(book: Book) {
     this.booksService.deletefav(book.id);

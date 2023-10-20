@@ -1,5 +1,6 @@
 import { createStore, select, setProps, withProps } from '@ngneat/elf';
 import {
+  getAllEntities,
   selectAllEntities,
   setEntities,
   withEntities,
@@ -51,8 +52,16 @@ export function setFavorites(favourite_ids: Array<Book['id']>) {
     })
   );
 }
+export function getFavourites() {
+  return bookStore.query((state) => state.favourites);
+}
+export function getBooks() {
+  return bookStore.query(getAllEntities());
+}
 
-export const getFavorites = bookStore.pipe(select((state) => state.favourites));
+export const selectFavorites$ = bookStore.pipe(
+  select((state) => state.favourites)
+);
 
 export const selectbookDataSource$ = bookDataSource.data$();
 

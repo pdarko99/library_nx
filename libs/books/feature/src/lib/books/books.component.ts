@@ -30,7 +30,7 @@ export default class FeatureComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.booksService.setBooksService();
+    this.booksService.loadBooks().subscribe();
   }
 
   favourites(book: Book) {

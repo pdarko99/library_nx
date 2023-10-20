@@ -1,8 +1,14 @@
 import { Injectable, Injector, inject, signal } from '@angular/core';
 import { Book } from 'books/model';
-import { filter, map } from 'rxjs';
-import { selectbookDataSource$, setBooks } from './books.store';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Observable, filter, map, switchMap, tap } from 'rxjs';
+import {
+  selectbookDataSource$,
+  setBooks,
+  getBooks,
+  selectFavorites$,
+  getFavourites,
+  setFavorites,
+} from './books.store';
 import { BooksDataService } from 'books/data-access';
 
 @Injectable({
@@ -10,57 +16,24 @@ import { BooksDataService } from 'books/data-access';
 })
 export class BooksService {
   protected readonly injector = inject(Injector);
+
   bookService = inject(BooksDataService);
 
-  favourites = signal<Book[]>([]);
-
-  books = [
-    {
-      id: 1,
-      title: 'Book 1',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae luctus massa',
-    },
-    {
-      id: 2,
-      title: 'Book 2',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae luctus massa',
-    },
-    {
-      id: 3,
-      title: 'Book 3',
-      description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent v
-        
-        itae luctus massa`,
-    },
-    {
-      id: 4,
-      title: 'Book 4',
-      description: 'Lorem ipsue luctus massa',
-    },
-    {
-      id: 5,
-      title: 'Book 5',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae luctus massa',
-    },
-  ];
-
-  
+  // favourites = selectFavorites$;
 
   all_books = selectbookDataSource$.pipe(
     filter((data) => !data.loading),
+    tap((data) => console.log(data, 'from slect all entites')),
     map((data) => data.books)
   );
 
-  setBooksService() {
-    setBooks(this.books);
+  loadBooks() {
+    return this.bookService.books().pipe(tap((books) => setBooks(books)));
   }
 
   addBook(data: Book) {
-    data.id = this.storyBooks().length + 1;
-    const books = [data, ...this.storyBooks()];
+    data.id = getBooks().length + 1;
+    const books = [data, ...getBooks()];
     setBooks(books);
   }
 
@@ -71,7 +44,7 @@ export class BooksService {
       description: data.description,
     };
 
-    const updatedBooks = this.storyBooks().map((todo) =>
+    const updatedBooks = getBooks().map((todo) =>
       todo.id === data.id ? newBook : todo
     );
 
@@ -81,32 +54,37 @@ export class BooksService {
   }
 
   deleteBook(id: number) {
-    const updatedBooks = this.storyBooks().filter((book) => book.id !== id);
+    const updatedBooks = getBooks().filter((book) => book.id !== id);
 
     setBooks(updatedBooks);
   }
 
-  addfav(data: Book): number {
-    if (!this.favourites().length) {
-      const bookDataService = this.injector.get(BooksDataService);
 
-      this.favourites = bookDataService.favourites;
-    }
+  getFavourites(): Observable<Array<Book>> {
+    selectFavorites$.pipe(
+      switchMap(favourites => {
+        return this.all_books.pipe(
+          map(books => books.filter(book => favourites.includes(book.id)))
+        )
+      })
+    )
+  }
+
+  addfav(data: Book): number {
     let results = 0;
 
-    const index = this.favourites().findIndex((i) => i.id === data.id);
+    const index = getFavourites().findIndex((i) => i === data.id);
 
     if (index === -1) {
-      this.favourites.set([...this.favourites(), data]);
+      setFavorites([...getFavourites(), data.id]);
       results = 1;
     }
 
     return results;
   }
 
-  deletefav(id?: number) {
-    const updatedBooks = this.favourites().filter((book) => book.id !== id);
-
-    this.favourites.set(updatedBooks);
+  deletefav(Favourite_id?: number) {
+    const updatedBooks = getFavourites().filter((id) => id !== Favourite_id);
+    setFavorites(updatedBooks);
   }
 }
