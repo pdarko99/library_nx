@@ -1,1 +1,1 @@
-export * from './lib/shared/card/card.component';
+export * from './lib/shared/dialog/dialog.component';

@@ -8,8 +8,11 @@ import { BooksDataService } from 'books/data-access';
 @Injectable({
   providedIn: 'root',
 })
-export class FeatureService {
+export class BooksService {
   protected readonly injector = inject(Injector);
+  bookService = inject(BooksDataService);
+
+ 
 
   favourites = signal<Book[]>([]);
 
@@ -102,5 +105,12 @@ export class FeatureService {
     }
 
     return results;
+  }
+
+  deletefav(id?: number) {
+    const updatedBooks = this.favourites().filter((book) => book.id !== id);
+
+    this.favourites.set(updatedBooks);
+
   }
 }

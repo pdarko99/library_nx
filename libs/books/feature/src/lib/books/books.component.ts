@@ -10,31 +10,28 @@ import { UiComponent } from 'books/ui';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CardComponent } from 'shared/card';
 import { Book } from 'books/model';
-import { FeatureService } from '../../feature.service';
-
-
-// interface BookService {
+import { BooksService} from './books.service';
 
 @Component({
   selector: 'lib-feature',
   standalone: true,
   imports: [UiComponent, MatDialogModule],
-  templateUrl: './feature.component.html',
-  styleUrls: ['./feature.component.css'],
+  templateUrl: './books.component.html',
+  styleUrls: ['./books.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class FeatureComponent implements OnInit {
   protected readonly injector = inject(Injector);
 
-  protected featureService = inject(FeatureService);
-  storyBooks = this.featureService.storyBooks;
+  protected booksService = inject(BooksService);
+  storyBooks = this.booksService.storyBooks;
 
   ngOnInit(): void {
-    this.featureService.setBooksService();
+    this.booksService.setBooksService();
   }
 
   favourites(book: Book) {
-    const results = this.featureService.addfav(book);
+    const results = this.booksService.addfav(book);
     if (results) {
       return alert('added to favourites');
     }
@@ -63,14 +60,14 @@ export default class FeatureComponent implements OnInit {
   }
 
   deleteBook(id: number) {
-    this.featureService.deleteBook(id);
+    this.booksService.deleteBook(id);
   }
 
   addBook(book: Book) {
-    this.featureService.addBook(book);
+    this.booksService.addBook(book);
   }
 
   updateBook(book: Book) {
-    this.featureService.updateBook(book);
+    this.booksService.updateBook(book);
   }
 }

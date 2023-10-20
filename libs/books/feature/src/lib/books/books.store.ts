@@ -1,4 +1,4 @@
-import { createStore, select, setProps } from '@ngneat/elf';
+import { createStore, select, setProps, withProps } from '@ngneat/elf';
 import { selectAllEntities, setEntities, withEntities } from '@ngneat/elf-entities';
 import { Book } from 'books/model';
 import {

@@ -1,2 +1,2 @@
-export * from './lib/books/feature/feature.component';
-export * from './lib/books/feature/books.route';
+export * from './lib/books/books.component';
+export * from './lib/books/books.route';

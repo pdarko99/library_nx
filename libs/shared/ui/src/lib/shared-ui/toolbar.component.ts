@@ -6,8 +6,8 @@ import {MatIconModule} from '@angular/material/icon';
   selector: 'lib-shared-ui',
   standalone: true,
   imports: [CommonModule, MatToolbarModule,MatIconModule],
-  templateUrl: './shared-ui.component.html',
-  styleUrls: ['./shared-ui.component.css'],
+  templateUrl: './toolbar.component.html',
+  styleUrls: ['./toolbar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SharedUiComponent {}

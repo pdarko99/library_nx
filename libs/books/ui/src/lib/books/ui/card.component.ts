@@ -9,8 +9,8 @@ import { NgFor, NgIf } from '@angular/common';
   selector: 'lib-books',
   standalone: true,
   imports: [MatGridListModule,NgIf,NgFor, MatCardModule, MatButtonModule, MatIconModule, DescriptionPipe],
-  templateUrl: './ui.component.html',
-  styleUrls: ['./ui.component.css'],
+  templateUrl: './card.component.html',
+  styleUrls: ['./card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UiComponent {

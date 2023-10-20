@@ -19,8 +19,8 @@ import { BooksDataService } from 'books/data-access';
     MatInputModule,
     MatFormFieldModule,
   ],
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css'],
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent {
