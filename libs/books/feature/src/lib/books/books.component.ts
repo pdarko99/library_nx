@@ -10,7 +10,8 @@ import { UiComponent } from 'books/ui';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CardComponent } from 'shared/card';
 import { Book } from 'books/model';
-import { BooksService} from './books.service';
+import { BooksService } from './books.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'lib-feature',
@@ -24,7 +25,9 @@ export default class FeatureComponent implements OnInit {
   protected readonly injector = inject(Injector);
 
   protected booksService = inject(BooksService);
-  storyBooks = this.booksService.storyBooks;
+  all_books = toSignal(this.booksService.all_books, {
+    initialValue: [] as Book[],
+  });
 
   ngOnInit(): void {
     this.booksService.setBooksService();

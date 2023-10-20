@@ -12,8 +12,6 @@ export class BooksService {
   protected readonly injector = inject(Injector);
   bookService = inject(BooksDataService);
 
- 
-
   favourites = signal<Book[]>([]);
 
   books = [
@@ -49,12 +47,11 @@ export class BooksService {
     },
   ];
 
-  public readonly storyBooks = toSignal(
-    selectbookDataSource$.pipe(
-      filter((data) => !data.loading),
-      map((data) => data.books)
-    ),
-    { initialValue: [] as Book[] }
+  
+
+  all_books = selectbookDataSource$.pipe(
+    filter((data) => !data.loading),
+    map((data) => data.books)
   );
 
   setBooksService() {
@@ -111,6 +108,5 @@ export class BooksService {
     const updatedBooks = this.favourites().filter((book) => book.id !== id);
 
     this.favourites.set(updatedBooks);
-
   }
 }
