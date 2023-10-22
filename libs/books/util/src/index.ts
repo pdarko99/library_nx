@@ -1,1 +1,1 @@
-export * from './lib/books/utils/flatten_description.pipe';
+export * from './lib/flatten_description.pipe';

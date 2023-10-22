@@ -19,7 +19,6 @@ export class BooksService {
 
   bookService = inject(BooksDataService);
 
-
   all_books$ = selectbookDataSource$.pipe(
     filter((data) => !data.loading),
     tap((data) => console.log(data, 'from slect all entites')),
@@ -30,24 +29,23 @@ export class BooksService {
     return this.bookService.books().pipe(tap((books) => setBooks(books)));
   }
 
-  addBook(data: Book) {
-    data.id = getBooks().length + 1;
-    const books = [data, ...getBooks()];
+  addBook(book: Book) {
+    const insertedBook = { ...book };
+    insertedBook.id = Math.max(...getBooks().map((i) => i.id)) + 1;
+    const books = [insertedBook, ...getBooks()];
     setBooks(books);
   }
 
-  updateBook(data: Book) {
+  updateBook(book_to_be_updated: Book) {
     const newBook = {
-      ...data,
-      title: data.title,
-      description: data.description,
+      ...book_to_be_updated,
+      title: book_to_be_updated.title,
+      description: book_to_be_updated.description,
     };
 
-    const updatedBooks = getBooks().map((todo) =>
-      todo.id === data.id ? newBook : todo
+    const updatedBooks = getBooks().map((book) =>
+      book.id === book_to_be_updated.id ? newBook : book_to_be_updated
     );
-
-    console.log(updatedBooks);
 
     setBooks(updatedBooks);
   }
@@ -61,26 +59,20 @@ export class BooksService {
   public getFavouriteBooks$ = selectFavorites$.pipe(
     switchMap((favourites) =>
       this.all_books$.pipe(
-        tap(x => console.log("firng here too")),
         map((books) => books.filter((book) => favourites.includes(book.id)))
       )
     )
   );
 
-  addfav(data: Book): number {
-    let results = 0;
+  addfavourite(favouriteBook_id: number) {
+    const favoriteBooks = getFavourites();
 
-    const index = getFavourites().findIndex((i) => i === data.id);
-
-    if (index === -1) {
-      setFavorites([...getFavourites(), data.id]);
-      results = 1;
-    }
-
-    return results;
+    favoriteBooks.includes(favouriteBook_id)
+      ? this.deletefavourite(favouriteBook_id)
+      : setFavorites(Array.from(new Set([...favoriteBooks, favouriteBook_id])));
   }
 
-  deletefav(Favourite_id?: number) {
+  deletefavourite(Favourite_id?: number) {
     const updatedBooks = getFavourites().filter((id) => id !== Favourite_id);
     setFavorites(updatedBooks);
   }

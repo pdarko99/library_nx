@@ -34,11 +34,8 @@ export default class BooksComponent implements OnInit {
   }
 
   favourites(book: Book) {
-    const results = this.booksService.addfav(book);
-    if (results) {
-      return alert('added to favourites');
-    }
-    alert('already added to favourites');
+    this.booksService.addfavourite(book.id);
+   
   }
 
   updatebook(book: Book) {

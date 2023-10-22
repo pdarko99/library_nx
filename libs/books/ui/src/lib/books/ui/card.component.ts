@@ -11,6 +11,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { NgFor, NgIf,TitleCasePipe } from '@angular/common';
 import {DescriptionPipe} from "books/util"
+import { IsFavouritePipe } from './is-favourite.pipe';
+import { toSignal } from '@angular/core/rxjs-interop';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { selectFavorites$ } from 'books/feature';
 @Component({
   selector: 'lib-books',
   standalone: true,
@@ -22,13 +26,17 @@ import {DescriptionPipe} from "books/util"
     MatButtonModule,
     MatIconModule,
     DescriptionPipe,
-    TitleCasePipe
+    TitleCasePipe,
+    IsFavouritePipe
   ],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent {
+  favouritesList = toSignal(selectFavorites$, {initialValue: [] as number[]})
+
+
   @Input({
     required: true,
   })

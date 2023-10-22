@@ -19,6 +19,6 @@ export default class FavouritesComponent {
   });
 
   removeFavourite(book: Book) {
-    this.booksService.deletefav(book.id);
+    this.booksService.deletefavourite(book.id);
   }
 }

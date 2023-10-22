@@ -15,7 +15,7 @@
     </mat-card-content>
     <mat-card-actions class="btn-container">
       <button (click)="favourites.emit(book)" mat-stroked-button class="add">
-        {{ favs ? 'remove' : 'add fav' }}
+        {{ favouritesList().includes(book.id) ? 'remove fav' : 'add fav' }}
       </button>
       <button
         *ngIf="!favs"
