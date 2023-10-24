@@ -6,17 +6,18 @@ import {
   inject,
 } from '@angular/core';
 
-import { CardComponent } from 'books/ui';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { DialogComponent } from "shared/dialog"
-import { Book } from 'books/model';
-import { BooksService } from './books.service';
+import { NgFor } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Book } from 'books/model';
+import { BookCardComponent } from 'books/ui';
+import { DialogComponent } from 'shared/dialog';
+import { BooksService } from './books.service';
 
 @Component({
   selector: 'lib-feature',
   standalone: true,
-  imports: [CardComponent, MatDialogModule],
+  imports: [BookCardComponent, MatDialogModule, NgFor],
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,17 +26,20 @@ export default class BooksComponent implements OnInit {
   protected readonly injector = inject(Injector);
 
   protected booksService = inject(BooksService);
-  all_books = toSignal(this.booksService.all_books$, {
+  allBooks = toSignal(this.booksService.all_books$, {
     initialValue: [] as Book[],
+  });
+
+  favourites = toSignal(this.booksService.selectFavourites$, {
+    initialValue: [] as Book['id'][],
   });
 
   ngOnInit(): void {
     this.booksService.loadBooks().subscribe();
   }
 
-  favourites(book: Book) {
-    this.booksService.addfavourite(book.id);
-   
+  toggleFavourite(book: Book) {
+    this.booksService.toggleFavourite(book.id);
   }
 
   updatebook(book: Book) {

@@ -1,15 +1,15 @@
 import { Injectable, Injector, inject } from '@angular/core';
+import { BooksDataService } from 'books/data-access';
 import { Book } from 'books/model';
 import { filter, map, switchMap, tap } from 'rxjs';
 import {
+  getBooks,
+  getFavourites,
+  selectFavorites$,
   selectbookDataSource$,
   setBooks,
-  getBooks,
-  selectFavorites$,
-  getFavourites,
   setFavorites,
 } from './books.store';
-import { BooksDataService } from 'books/data-access';
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +56,8 @@ export class BooksService {
     setBooks(updatedBooks);
   }
 
+  public selectFavourites$ = selectFavorites$;
+
   public getFavouriteBooks$ = selectFavorites$.pipe(
     switchMap((favourites) =>
       this.all_books$.pipe(
@@ -64,7 +66,7 @@ export class BooksService {
     )
   );
 
-  addfavourite(favouriteBook_id: number) {
+  toggleFavourite(favouriteBook_id: number) {
     const favoriteBooks = getFavourites();
 
     favoriteBooks.includes(favouriteBook_id)

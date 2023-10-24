@@ -1,23 +1,26 @@
-<div class="responsive-grid container">
-  <mat-card *ngFor="let book of books" class="example-card">
-    <mat-card-content class="content">
-      <img
-        mat-card-image
-        class="img-responsive"
-        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-        alt="Photo of a Shiba Inu"
-      />
-      <h3>{{ book.title | titlecase }}</h3>
+<mat-card class="example-card">
+  <mat-card-content class="content">
+    <img
+      mat-card-image
+      class="img-responsive"
+      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+      alt="Photo of a Shiba Inu"
+    />
+    <h3>{{ book.title | titlecase }}</h3>
 
-      <p>
-        {{ book.description | flatten_description }}
-      </p>
-    </mat-card-content>
-    <mat-card-actions class="btn-container">
-      <button (click)="favourites.emit(book)" mat-stroked-button class="add">
-        {{ favouritesList().includes(book.id) ? 'remove fav' : 'add fav' }}
-      </button>
-      <button
+    <p>
+      {{ book.description | flatten_description }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions class="btn-container">
+    <button
+      (click)="favouriteToggled.emit(book)"
+      mat-stroked-button
+      class="add"
+    >
+      {{ isFavorite ? 'Remove' : 'Add' }}
+    </button>
+    <!-- <button
         *ngIf="!favs"
         mat-icon-button
         class="example-icon"
@@ -25,7 +28,6 @@
         (click)="updatebook.emit(book)"
       >
         <mat-icon>drag_indicator</mat-icon>
-      </button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+      </button> -->
+  </mat-card-actions>
+</mat-card>
