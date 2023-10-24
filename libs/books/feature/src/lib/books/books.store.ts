@@ -5,12 +5,12 @@ import {
   setEntities,
   withEntities,
 } from '@ngneat/elf-entities';
-import { Book } from 'books/model';
 import {
+  createRequestDataSource,
   withRequestsCache,
   withRequestsStatus,
-  createRequestDataSource,
 } from '@ngneat/elf-requests';
+import { Book } from 'books/model';
 
 import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
 

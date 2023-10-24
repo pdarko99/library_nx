@@ -19,13 +19,13 @@ export class BooksService {
 
   bookService = inject(BooksDataService);
 
-  all_books$ = selectbookDataSource$.pipe(
+  all$ = selectbookDataSource$.pipe(
     filter((data) => !data.loading),
     tap((data) => console.log(data, 'from slect all entites')),
     map((data) => data.books)
   );
 
-  loadBooks() {
+  fetchBooks() {
     return this.bookService.books().pipe(tap((books) => setBooks(books)));
   }
 

@@ -35,7 +35,7 @@ export default class BooksComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.booksService.loadBooks().subscribe();
+    this.booksService.fetchBooks().subscribe();
   }
 
   toggleFavourite(book: Book) {
