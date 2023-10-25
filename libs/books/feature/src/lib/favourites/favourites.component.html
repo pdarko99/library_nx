@@ -3,5 +3,9 @@
     <h2>My favs</h2>
   </div>
 
-  <lib-books [books]="favourites()" [favs]="true" (favourites)="removeFavourite($event)" />
+  <lib-books
+    *ngFor="let book of favourites()"
+    [book]="book"
+    [isFavorite]="true"
+  />
 </main>

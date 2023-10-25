@@ -1,3 +1,4 @@
+import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,21 +6,15 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { NgFor, NgIf,TitleCasePipe } from '@angular/common';
-import {DescriptionPipe} from "books/util"
-import { IsFavouritePipe } from './is-favourite.pipe';
-import { toSignal } from '@angular/core/rxjs-interop';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { selectFavorites$ } from 'books/feature';
+import { Book } from 'books/model';
+import { DescriptionPipe } from 'books/util';
 @Component({
   selector: 'lib-books',
   standalone: true,
   imports: [
-    MatGridListModule,
     NgIf,
     NgFor,
     MatCardModule,
@@ -27,26 +22,25 @@ import { selectFavorites$ } from 'books/feature';
     MatIconModule,
     DescriptionPipe,
     TitleCasePipe,
-    IsFavouritePipe
   ],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardComponent {
-  favouritesList = toSignal(selectFavorites$, {initialValue: [] as number[]})
-
+export class BookCardComponent {
+  @Input({
+    required: true,
+  })
+  isFavorite!: boolean;
 
   @Input({
     required: true,
   })
-  public books: any;
-  @Input()
-  favs!: boolean;
+  public book!: Book;
 
   @Output()
-  favourites = new EventEmitter();
+  favouriteToggled = new EventEmitter<Book>();
 
   @Output()
-  updatebook = new EventEmitter();
+  bookUpdated = new EventEmitter<Book>();
 }

@@ -1,15 +1,17 @@
 <main>
-    <div class="header">
-        <h2>All Books</h2>
-        <div>
-            <button mat-raised-button class="addBook" (click)="openDialog()">Add Book</button>
-
-        </div>
-        
+  <div class="header">
+    <h2>All Books</h2>
+    <div>
+      <button mat-raised-button class="addBook" (click)="openDialog()">
+        Add Book
+      </button>
     </div>
-    <lib-books
-    [books]="all_books()"
-    (favourites)="favourites($event)"
-    (updatebook)="updatebook($event)"
-    />
+  </div>
+  <lib-books
+    *ngFor="let book of allBooks()"
+    [book]="book"
+    [isFavorite]="favourites().includes(book.id)"
+    (favouriteToggled)="toggleFavourite($event)"
+    (bookUpdated)="updatebook($event)"
+  />
 </main>
