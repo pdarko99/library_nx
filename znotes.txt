@@ -22,3 +22,12 @@ to be able to use onpush
 
 
 //difference between getAllEntities and SelectAllEntities
+//why is it that the pipe doesn't listen to reaction when i change them
+//for the store in the crud app tried replicating the same thing
+//i did with component store but it doesn't work and how does the set instead
+//the componenet store know which todo am working with
+//update entitiesl and and update all entitie how does it really work which instead
+//id is it talking about here
+//can i be tracking the loading state when updating a todo
+//Immutable js we use it mostly when items are many and we dont wnat to duplicate(making a new refrence) hence 
+//it does that for us
